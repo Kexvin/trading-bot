@@ -98,7 +98,12 @@ def calculate_confidence_score(symbol, history, rsi_realtime=None, is_simulation
             # Future: add get_news_sentiment() here
             if ml_model is not None:
                 try:
-                    volume = history['volume'].iloc[-1] if 'volume' in history.columns else 0
+                    if 'volume' in history.columns:
+                        volume = history['volume'].iloc[-1]
+                    elif 'Volume' in history.columns:
+                        volume = history['Volume'].iloc[-1]
+                    else:
+                        volume = 0
                     features = pd.DataFrame([[rsi_val, macd_line, volume]], columns=['RSI', 'MACD', 'Volume'])
                     pred = ml_model.predict(features)[0]
                     if pred == 1:

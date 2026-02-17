@@ -6,7 +6,7 @@ class CustomFormatter(logging.Formatter):
         msg = super().format(record)
         
         # Mask current User's home dynamically
-        User_home = os.path.expandUser("~")
+        User_home = os.path.expanduser("~")
         if User_home in msg:
              msg = msg.replace(User_home, "~")
              
